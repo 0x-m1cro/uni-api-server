@@ -3,23 +3,36 @@ const puppeteer = require('puppeteer-core');
 const express = require('express')
 const app = express()
 const port = 8000
+let _page;
+
+async function getBrowser() {
+  // local development is broken for this 👇
+  // but it works in vercel so I'm not gonna touch it
+  return puppeteer.launch({
+    args: [...chromium.args, '--hide-scrollbars', '--disable-web-security'],
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath(
+      `https://github.com/Sparticuz/chromium/releases/download/v116.0.0/chromium-v116.0.0-pack.tar`
+    ),
+    headless: chromium.headless,
+    ignoreHTTPSErrors: true,
+  });
+}
+
+async function getPage() {
+  if (_page) return _page;
+
+  const browser = await getBrowser();
+  _page = await browser.newPage();
+  return _page;
+}
  
-app.use(express.static('public'))
 app.get('/', (req, res) => { res.send('Welcome') })
 
 app.get('/api/maldives', async (req, res) => {
   
   try {
-    const options = {
-      args: [...chromium.args, '--hide-scrollbars', '--disable-web-security'],
-      executablePath: await chromium.executablePath(
-      `https://github.com/Sparticuz/chromium/releases/download/v115.0.0/chromium-v115.0.0-pack.tar`
-    ),
-    headless: chromium.headless,
-    ignoreHTTPSErrors: true,
-    };
-    const browser = await puppeteer.launch(options);
-    const page = await browser.newPage();
+    const page = await getPage();
     await page.goto('https://hotelscan.com/combiner?pos=zz&locale=en&checkin=2024-07-23&checkout=2024-07-28&rooms=2&mobile=0&loop=3&country=MV&ef=1&geoid=xmmmamtksdxx&deviceNetwork=4g&deviceCpu=20&deviceMemory=8&limit=25&offset=0',
         {
           waitUntil: "networkidle2",
