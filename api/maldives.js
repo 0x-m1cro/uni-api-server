@@ -1,4 +1,8 @@
-const puppeteer = require('puppeteer-core');
+const puppeteer = require('puppeteer-extra')
+
+// add stealth plugin and use defaults (all evasion techniques)
+const StealthPlugin = require('puppeteer-extra-plugin-stealth')
+puppeteer.use(StealthPlugin())
 const chromium = require('@sparticuz/chromium-min');
 
 module.exports = async (req, res) => {
@@ -10,13 +14,13 @@ module.exports = async (req, res) => {
     );
 
     browser = await puppeteer.launch({
-      args: [
-        ...chromium.args,
-        '--hide-scrollbars',
-        '--disable-web-security',
-        '--no-sandbox',
-        '--disable-setuid-sandbox'
-      ],
+      // args: [
+      //   ...chromium.args,
+      //   '--hide-scrollbars',
+      //   '--disable-web-security',
+      //   '--no-sandbox',
+      //   '--disable-setuid-sandbox'
+      // ],
       executablePath: executablePath,
       headless: chromium.headless,
       ignoreHTTPSErrors: true,
