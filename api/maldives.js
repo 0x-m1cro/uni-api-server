@@ -14,8 +14,7 @@ async function getBrowser() {
       '--hide-scrollbars',
       '--disable-web-security',
       '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--disable-dev-shm-usage'
+      '--disable-setuid-sandbox'
     ],
     executablePath: executablePath,
     headless: chromium.headless,
@@ -36,8 +35,8 @@ module.exports = async (req, res) => {
       waitUntil: "networkidle0",
     });
 
-    let body = await page.waitForSelector('body'); // Wait for body selector to ensure the page has loaded
-    let json = await body?.evaluate(el => el.textContent);
+    await page.waitForSelector('body'); // Wait for body selector to ensure the page has loaded
+    const json = await page.evaluate(() => document.body.innerText ? JSON.parse(document.body.innerText) : {});
 
     res.status(200).json(json);
   } catch (error) {
