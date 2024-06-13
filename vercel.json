@@ -3,14 +3,12 @@
   "routes": [
     {
       "src": "/",
-      "dest": "/index.html"
-    },
-    {
-      "src": "/api/maldives",
-      "dest": "api/maldives.js"
-    }
-  ],
-  "builds": [
-    {}
+      "dest": "index.html"
+     },
+   {
+    "src": "/api/maldives",
+    "dest": "api/maldives.js"
+   }
   ]
-}
+ }
+ 
