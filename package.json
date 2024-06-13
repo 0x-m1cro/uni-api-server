@@ -2,9 +2,8 @@
   "name": "uni-api-server",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "api/app.js",
   "scripts": {
-    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
