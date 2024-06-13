@@ -16,8 +16,8 @@ module.exports = async (req, res) => {
         '--disable-web-security',
         '--no-sandbox'
       ],
-      executablePath: await chromium.executablePath('https://github.com/Sparticuz/chromium/releases/download/v110.0.1/chromium-v110.0.1-pack.tar'),
-      headless: chromium.headless,
+      executablePath: await chromium.executablePath(),
+      headless: "new",
       ignoreHTTPSErrors: true,
       dumpio: true
     });
