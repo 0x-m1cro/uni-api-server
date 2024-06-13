@@ -1,25 +1,29 @@
 const puppeteer = require('puppeteer-core')
- const chromium = require('@sparticuz/chromium-min');
+const antibotbrowser = require("antibotbrowser");
+//const chromium = require('@sparticuz/chromium-min');
 
 module.exports = async (req, res) => {
   let browser;
 
   try {
-    const executablePath = await chromium.executablePath(
-      `https://github.com/Sparticuz/chromium/releases/download/v123.0.1/chromium-v123.0.1-pack.tar`
-    );
+    // const executablePath = await chromium.executablePath(
+    //   `https://github.com/Sparticuz/chromium/releases/download/v123.0.1/chromium-v123.0.1-pack.tar`
+    // );
+    
+    // browser = await puppeteer.launch({
+    //   args: [
+    //     ...chromium.args,
+    //     '--hide-scrollbars',
+    //     '--disable-web-security'
+    //   ],
+    //   executablePath: executablePath,
+    //   headless: chromium.headless,
+    //   ignoreHTTPSErrors: true,
+    //   dumpio: true
+    // });
 
-    browser = await puppeteer.launch({
-      args: [
-        ...chromium.args,
-        '--hide-scrollbars',
-        '--disable-web-security'
-      ],
-      executablePath: executablePath,
-      headless: chromium.headless,
-      ignoreHTTPSErrors: true,
-      dumpio: true
-    });
+    const antibrowser = await antibotbrowser.startbrowser();  
+    const browser = await puppeteer.connect({browserWSEndpoint: antibrowser.websokcet});
 
     const page = await browser.newPage();
      
