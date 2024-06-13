@@ -9,7 +9,6 @@
   "license": "ISC",
   "dependencies": {
     "@sparticuz/chromium-min": "^115.0.0",
-    "puppeteer": "^22.11.0",
     "puppeteer-core": "^21.0.2"
   }
 }

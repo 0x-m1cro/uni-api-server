@@ -3,14 +3,17 @@
   "routes": [
     {
       "src": "/",
-      "dest": "index.html"
-     },
-   {
-    "src": "/api/maldives",
-    "dest": "api/maldives.js"
-   }
+      "dest": "/index.html"
+    },
+    {
+      "src": "/api/maldives",
+      "dest": "/api/maldives.js"
+    }
   ],
-  "build": {}
-
- }
- 
+  "builds": [
+    {
+      "src": "api/maldives.js",
+      "use": "@vercel/node"
+    }
+  ]
+}
