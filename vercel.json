@@ -12,7 +12,7 @@
   ],
   "builds": [
     { "src": "*.html", "use": "@vercel/static" },
-    { "src": "*.js", "use": "@vercel/node" }
+    { "src": "api/maldives.js", "use": "@vercel/node" }
   ]
  }
  
