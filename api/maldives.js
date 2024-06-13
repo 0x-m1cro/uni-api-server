@@ -1,6 +1,5 @@
 const puppeteer = require('puppeteer-core')
-const antibotbrowser = require("antibotbrowser");
-//const chromium = require('@sparticuz/chromium-min');
+const chromium = require('@sparticuz/chromium-min');
 
 module.exports = async (req, res) => {
   let browser;
@@ -10,26 +9,23 @@ module.exports = async (req, res) => {
     //   `https://github.com/Sparticuz/chromium/releases/download/v123.0.1/chromium-v123.0.1-pack.tar`
     // );
     
-    // browser = await puppeteer.launch({
-    //   args: [
-    //     ...chromium.args,
-    //     '--hide-scrollbars',
-    //     '--disable-web-security'
-    //   ],
-    //   executablePath: executablePath,
-    //   headless: chromium.headless,
-    //   ignoreHTTPSErrors: true,
-    //   dumpio: true
-    // });
+    browser = await puppeteer.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(
+        "https://github.com/Sparticuz/chromium/releases/download/v110.0.1/chromium-v110.0.1-pack.tar"
+      ),
+      headless: chromium.headless,
+      ignoreHTTPSErrors: true,
+    });
 
-    const antibrowser = await antibotbrowser.startbrowser();  
-    const browser = await puppeteer.connect({browserWSEndpoint: antibrowser.websokcet});
-
+    
     const page = await browser.newPage();
      
     await page.goto('https://hotelscan.com/combiner?pos=zz&locale=en&checkin=2024-07-23&checkout=2024-07-28&rooms=2&mobile=0&loop=3&country=MV&ef=1&geoid=xmmmamtksdxx&deviceNetwork=4g&deviceCpu=20&deviceMemory=8&limit=25&offset=0z', { waitUntil: 'networkidle2' });
     let body = await page.waitForSelector('body');
     let json = await body?.evaluate(el => el.textContent);
+    console.log("Chromium:", await browser.version());
     res.status(200).send(json);
   } catch (error) {
     console.error('Error occurred:', error.message);
