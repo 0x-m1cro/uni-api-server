@@ -12,7 +12,7 @@ async function getBrowser() {
   return puppeteer.launch({
     args: [...chromium.args, '--hide-scrollbars', '--disable-web-security'],
     executablePath: await chromium.executablePath(
-      `https://github.com/Sparticuz/chromium/releases/download/v123.0.1/chromium-v123.0.1-pack.tar`
+      `https://github.com/Sparticuz/chromium/releases/download/v116.0.0/chromium-v116.0.0-pack.tar`
     ),
     headless: "new",
     ignoreHTTPSErrors: true,
