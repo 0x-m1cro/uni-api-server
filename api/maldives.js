@@ -14,7 +14,7 @@ async function getBrowser() {
     executablePath: await chromium.executablePath(
       `https://github.com/Sparticuz/chromium/releases/download/v116.0.0/chromium-v116.0.0-pack.tar`
     ),
-    headless: "new",
+    headless: chromium.headless,
     ignoreHTTPSErrors: true,
   });
 }
@@ -69,7 +69,7 @@ module.exports = async (req, res) => {
           waitUntil: "networkidle2",
           timeout: 0
         });
-
+       await page.waitForNavigation();
     let body = await page.waitForSelector('body');
     let json = await body?.evaluate(el => JSON.parse(el.textContent));  
     await browser?.close();   
@@ -77,7 +77,5 @@ module.exports = async (req, res) => {
   } catch (error) {
     console.log(error);  
     res.status(500).json({ error: error.message });
-  } finally {
-    await browser?.close(); 
-  }
+  } 
 }
