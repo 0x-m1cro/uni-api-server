@@ -14,7 +14,8 @@ async function getBrowser() {
       '--hide-scrollbars',
       '--disable-web-security',
       '--no-sandbox',
-      '--disable-setuid-sandbox'
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage'
     ],
     executablePath: executablePath,
     headless: chromium.headless,
