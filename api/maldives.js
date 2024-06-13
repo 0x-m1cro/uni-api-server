@@ -10,11 +10,11 @@ async function getBrowser() {
   // Adjust browser launch configuration
   return puppeteer.launch({
     args: [
-      //...chromium.args,
+      ...chromium.args,
       //'--hide-scrollbars',
       //'--disable-web-security',
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
+      // '--no-sandbox',
+      // '--disable-setuid-sandbox',
       //'--disable-dev-shm-usage'
     ],
     executablePath: executablePath,
