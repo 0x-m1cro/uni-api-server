@@ -1,9 +1,5 @@
-const puppeteer = require('puppeteer-extra')
-
-// add stealth plugin and use defaults (all evasion techniques)
-const StealthPlugin = require('puppeteer-extra-plugin-stealth')
-puppeteer.use(StealthPlugin())
-const chromium = require('@sparticuz/chromium-min');
+const puppeteer = require('puppeteer-core')
+ const chromium = require('@sparticuz/chromium-min');
 
 module.exports = async (req, res) => {
   let browser;
