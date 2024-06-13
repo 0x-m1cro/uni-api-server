@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
         '--disable-web-security',
         '--no-sandbox'
       ],
-      executablePath: await chromium.executablePath(),
+      executablePath: executablePath,
       headless: "new",
       ignoreHTTPSErrors: true,
       dumpio: true
