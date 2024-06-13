@@ -6,8 +6,8 @@
       "dest": "index.html"
      },
    {
-    "src": "/(.*)",
-    "dest": "api/app.js"
+    "src": "/api/maldives",
+    "dest": "api/maldives.js"
    }
   ],
   "build": {}
