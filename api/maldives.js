@@ -60,9 +60,11 @@ async function getBrowser() {
 // };
 
 module.exports = async (req, res) => {
- 
+
+  const browser = await getBrowser();
+
   try {
-    const browser = await getBrowser();
+    
     let page = await browser.newPage();
     await page.goto('https://hotelscan.com/combiner?pos=zz&locale=en&checkin=2024-07-23&checkout=2024-07-28&rooms=2&mobile=0&loop=3&country=MV&ef=1&geoid=xmmmamtksdxx&deviceNetwork=4g&deviceCpu=20&deviceMemory=8&limit=25&offset=0',
         {
@@ -71,7 +73,7 @@ module.exports = async (req, res) => {
         });
        await page.waitForNavigation();
     let body = await page.waitForSelector('body');
-    let json = await body?.evaluate(el => JSON.parse(el.textContent));  
+    let json = await page.$$eval(el => JSON.parse(el.textContent));  
     await browser?.close();   
     res.status(200).json(json);   
   } catch (error) {
