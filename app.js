@@ -12,8 +12,11 @@ app.get('/api/maldives', async (req, res) => {
   try {
     const options = {
       args: [...chromium.args, '--hide-scrollbars', '--disable-web-security'],
-      executablePath: await chromium.executablePath,
-      headless: "new",
+      executablePath: await chromium.executablePath(
+      `https://github.com/Sparticuz/chromium/releases/download/v116.0.0/chromium-v116.0.0-pack.tar`
+    ),
+    headless: chromium.headless,
+    ignoreHTTPSErrors: true,
     };
     const browser = await puppeteer.launch(options);
     const page = await browser.newPage();
