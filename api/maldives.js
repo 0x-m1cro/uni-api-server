@@ -47,7 +47,6 @@ module.exports = async (req, res) => {
 
     let body = await page.waitForSelector('body'); // Wait for body selector to ensure the page has loaded
     let json = await body?.evaluate(el => JSON.parse(el.textContent));
-    await browser.close();   
     res.status(200).json(json);
   } catch (error) {
     console.error('Error occurred:', error);  
