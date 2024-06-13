@@ -2,15 +2,16 @@
   "name": "uni-api-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@sparticuz/chromium-min": "^123.0.1",
+    "express": "^4.19.2",
     "puppeteer-core": "^22.11.0"
   }
 }
