@@ -32,12 +32,11 @@ module.exports = async (req, res) => {
 
     // Set a generous timeout and wait for network to be idle
     await page.goto('https://hotelscan.com/combiner?pos=zz&locale=en&checkin=2024-07-23&checkout=2024-07-28&rooms=2&mobile=0&loop=3&country=MV&ef=1&geoid=xmmmamtksdxx&deviceNetwork=4g&deviceCpu=20&deviceMemory=8&limit=25&offset=0', {
-      waitUntil: "networkidle2",
-      timeout: 60000 // 60 seconds timeout
+      waitUntil: "networkidle0",
     });
 
-    await page.waitForSelector('body', { timeout: 60000 }); // Wait for body selector to ensure the page has loaded
-    const json = await page.evaluate(() => document.body.innerText ? JSON.parse(document.body.innerText) : {});
+    let body = await page.waitForSelector('body'); // Wait for body selector to ensure the page has loaded
+    let json = await body?.evaluate(el => el.textContent);
 
     res.status(200).json(json);
   } catch (error) {
