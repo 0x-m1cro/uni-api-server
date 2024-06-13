@@ -13,7 +13,7 @@ app.get('/api/maldives', async (req, res) => {
     const options = {
       args: [...chromium.args, '--hide-scrollbars', '--disable-web-security'],
       executablePath: await chromium.executablePath(
-      `https://github.com/Sparticuz/chromium/releases/download/v116.0.0/chromium-v116.0.0-pack.tar`
+      `https://github.com/Sparticuz/chromium/releases/download/v115.0.0/chromium-v115.0.0-pack.tar`
     ),
     headless: chromium.headless,
     ignoreHTTPSErrors: true,
