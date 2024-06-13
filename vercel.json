@@ -9,10 +9,6 @@
     "src": "/api/maldives",
     "dest": "api/maldives.js"
    }
-  ],
-  "builds": [
-    { "src": "*.html", "use": "@vercel/static" },
-    { "src": "api/maldives.js", "use": "@vercel/node" }
   ]
  }
  
