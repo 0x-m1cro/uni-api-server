@@ -71,8 +71,7 @@ module.exports = async (req, res) => {
           waitUntil: "networkidle2",
           timeout: 0
         });
-       await page.waitForNavigation();
-    let body = await page.waitForSelector('body');
+    await page.waitForSelector('body');
     let json = await page.$$eval(el => JSON.parse(el.textContent));  
     await browser?.close();   
     res.status(200).json(json);   
