@@ -9,11 +9,6 @@
     "src": "/api/maldives",
     "dest": "api/maldives.js"
    }
-  ],
-  "functions": {
-    "api/**/*": {
-      "maxDuration": 30 
-    }
-  }
+  ]
  }
  

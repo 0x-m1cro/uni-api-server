@@ -14,10 +14,9 @@ module.exports = async (req, res) => {
         ...chromium.args,
         '--hide-scrollbars', 
         '--disable-web-security',
-        '--no-sandbox'
       ],
       executablePath: executablePath,
-      headless: "new",
+      headless: true,
       ignoreHTTPSErrors: true,
       dumpio: true
     });
