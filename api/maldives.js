@@ -11,11 +11,10 @@ async function getBrowser() {
   // but it works in vercel so I'm not gonna touch it
   return puppeteer.launch({
     args: [...chromium.args, '--hide-scrollbars', '--disable-web-security'],
-    defaultViewport: chromium.defaultViewport,
     executablePath: await chromium.executablePath(
-      `https://github.com/Sparticuz/chromium/releases/download/v116.0.0/chromium-v116.0.0-pack.tar`
+      `https://github.com/Sparticuz/chromium/releases/download/v123.0.1/chromium-v123.0.1-pack.tar`
     ),
-    headless: chromium.headless,
+    headless: "new",
     ignoreHTTPSErrors: true,
   });
 }
@@ -63,7 +62,7 @@ async function getBrowser() {
 module.exports = async (req, res) => {
  
   try {
-    let browser = await getBrowser();
+    const browser = await getBrowser();
     let page = await browser.newPage();
     await page.goto('https://hotelscan.com/combiner?pos=zz&locale=en&checkin=2024-07-23&checkout=2024-07-28&rooms=2&mobile=0&loop=3&country=MV&ef=1&geoid=xmmmamtksdxx&deviceNetwork=4g&deviceCpu=20&deviceMemory=8&limit=25&offset=0',
         {
@@ -73,8 +72,9 @@ module.exports = async (req, res) => {
 
     let body = await page.waitForSelector('body');
     let json = await body?.evaluate(el => JSON.parse(el.textContent));  
+    await browser?.close();   
     res.status(200).json(json);  
-    await browser.close();      
+       
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
