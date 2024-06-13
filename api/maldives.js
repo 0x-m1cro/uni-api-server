@@ -20,13 +20,13 @@ async function getBrowser() {
   });
 }
 
-async function getPage() {
-  if (_page) return _page;
+// async function getPage() {
+//   if (_page) return _page;
 
-  const browser = await getBrowser();
-  _page = await browser.newPage();
-  return _page;
-}
+//   const browser = await getBrowser();
+//   _page = await browser.newPage();
+//   return _page;
+// }
  
 // app.get('/', (req, res) => { res.send('Welcome') })
 
@@ -60,9 +60,10 @@ async function getPage() {
  
 // };
 
-export default async function (req, res) {
-  res.setHeader('Content-Type', 'application/json');
+module.exports = async (req, res) => {
+ 
   try {
+    const browser = await getBrowser();
     const page = await getPage();
     await page.goto('https://hotelscan.com/combiner?pos=zz&locale=en&checkin=2024-07-23&checkout=2024-07-28&rooms=2&mobile=0&loop=3&country=MV&ef=1&geoid=xmmmamtksdxx&deviceNetwork=4g&deviceCpu=20&deviceMemory=8&limit=25&offset=0',
         {
