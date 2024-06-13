@@ -13,7 +13,8 @@ module.exports = async (req, res) => {
       args: [
         ...chromium.args,
         '--hide-scrollbars', 
-        '--disable-web-security'
+        '--disable-web-security',
+        '--no-sandbox'
       ],
       executablePath: executablePath,
       headless: chromium.headless,
