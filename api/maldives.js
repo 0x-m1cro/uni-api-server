@@ -11,11 +11,7 @@ module.exports = async (req, res) => {
 
     browser = await puppeteer.launch({
       args: [
-        ...chromium.args,
-        '--hide-scrollbars',
-        '--disable-web-security',
         '--no-sandbox',
-        '--disable-setuid-sandbox'
       ],
       executablePath: executablePath,
       headless: chromium.headless,
