@@ -1,9 +1,10 @@
 const chromium = require('@sparticuz/chromium-min');
 const puppeteer = require('puppeteer-core');
+let _page;
 // const express = require('express')
 // const app = express()
 // const port = 8000
-let _page;
+
 
 async function getBrowser() {
   // local development is broken for this 👇
@@ -54,8 +55,13 @@ async function getPage() {
 
 // app.listen(port, () => console.log(`App listening on port ${port}!`))
 
-module.exports = async (req, res) => {
+// module.exports = async (req, res) => {
  
+ 
+// };
+
+export default async function (req, res) {
+  res.setHeader('Content-Type', 'application/json');
   try {
     const page = await getPage();
     await page.goto('https://hotelscan.com/combiner?pos=zz&locale=en&checkin=2024-07-23&checkout=2024-07-28&rooms=2&mobile=0&loop=3&country=MV&ef=1&geoid=xmmmamtksdxx&deviceNetwork=4g&deviceCpu=20&deviceMemory=8&limit=25&offset=0',
@@ -75,4 +81,4 @@ module.exports = async (req, res) => {
       await browser.close();
     }
   }
-};
+}
