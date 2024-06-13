@@ -4,7 +4,7 @@ const chromium = require('@sparticuz/chromium-min');
 async function getBrowser() {
   // Ensure the executablePath URL is correct and points to a compatible version
   const executablePath = await chromium.executablePath(
-    `https://github.com/Sparticuz/chromium/releases/download/v116.0.0/chromium-v116.0.0-pack.tar`
+    `https://github.com/Sparticuz/chromium/releases/download/v123.0.1/chromium-v123.0.1-pack.tar`
   );
 
   // Adjust browser launch configuration
@@ -14,7 +14,8 @@ async function getBrowser() {
       '--hide-scrollbars',
       '--disable-web-security',
       '--no-sandbox',
-      '--disable-setuid-sandbox'
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage'
     ],
     executablePath: executablePath,
     headless: chromium.headless,
