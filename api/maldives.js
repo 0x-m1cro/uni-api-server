@@ -63,8 +63,8 @@ async function getBrowser() {
 module.exports = async (req, res) => {
  
   try {
-    const browser = await getBrowser();
-    await browser.newPage();
+    let browser = await getBrowser();
+    let page = await browser.newPage();
     await page.goto('https://hotelscan.com/combiner?pos=zz&locale=en&checkin=2024-07-23&checkout=2024-07-28&rooms=2&mobile=0&loop=3&country=MV&ef=1&geoid=xmmmamtksdxx&deviceNetwork=4g&deviceCpu=20&deviceMemory=8&limit=25&offset=0',
         {
           waitUntil: "networkidle2",
