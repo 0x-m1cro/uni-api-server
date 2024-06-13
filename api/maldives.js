@@ -72,14 +72,10 @@ module.exports = async (req, res) => {
         });
 
     let body = await page.waitForSelector('body');
-    let json = await body?.evaluate(el => JSON.parse(el.textContent));
-    await browser.close();   
-    res.status(200).json(json);       
+    let json = await body?.evaluate(el => JSON.parse(el.textContent));  
+    res.status(200).json(json);  
+    await browser.close();      
   } catch (error) {
     res.status(500).json({ error: error.message });
-  } finally {
-    if (browser !== null) {
-      await browser.close();
-    }
   }
 }
