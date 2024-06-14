@@ -13,11 +13,11 @@ module.exports = async (req, res) => {
     );
     
     browser = await puppeteer.launch({
-      args: [
-        ...chromium.args,
-        '--hide-scrollbars', 
-        '--disable-web-security',
-      ],
+    //   args: [
+    //     ...chromium.args,
+    //     '--hide-scrollbars', 
+    //     '--disable-web-security',
+    //   ],
       executablePath: executablePath,
       headless: true,
       ignoreHTTPSErrors: true,
@@ -30,7 +30,7 @@ module.exports = async (req, res) => {
 
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36')
      
-    await page.goto('https://www.trivago.com/en-US/srl/hotels-maldives?search=200-121;dr-20240819-20240824;rc-1-2', { waitUntil: 'networkidle2' });
+    await page.goto('https://www.trivago.com/en-US/lm/hotels-maldives?search=200-121;dr-20240819-20240824;rc-1-2', { waitUntil: 'networkidle2' });
     await page.waitForSelector('body');
 
     page.on('response', async (response) => {
