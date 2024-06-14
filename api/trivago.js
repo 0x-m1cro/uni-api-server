@@ -14,10 +14,7 @@ module.exports = async (req, res) => {
     
     browser = await puppeteer.launch({
       args: [
-        ...chromium.args,
-        '--hide-scrollbars', 
-        '--disable-web-security',
-        '--no-sandbox'
+        ...chromium.args
           ],
       executablePath: executablePath,
       headless: true,
@@ -40,7 +37,7 @@ module.exports = async (req, res) => {
                 const url = response.url();
                 const status = response.status();
                 const headers = response.headers();
-                json = await response.text();
+                json = await response.json();
                  
                 // if(responseBody){
                 // await fs.writeFile('public/trivago.json', responseBody);
