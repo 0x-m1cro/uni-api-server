@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer-core')
 const chromium = require('@sparticuz/chromium-min');
-const fs = require('fs').promises;
-import path from 'path';
+// const fs = require('fs').promises;
+// import path from 'path';
 export const maxDuration = 30
 module.exports = async (req, res) => {
   let browser;
@@ -39,11 +39,11 @@ module.exports = async (req, res) => {
                 const url = response.url();
                 const status = response.status();
                 const headers = response.headers();
-                const responseBody = await response.text();
-                json = responseBody;
-                if(responseBody){
-                await fs.writeFile('public/trivago.json', responseBody);
-                }
+                json = await response.text();
+                 
+                // if(responseBody){
+                // await fs.writeFile('public/trivago.json', responseBody);
+                // }
 
                 console.log(`URL: ${url}`);
                 console.log(`Status: ${status}`);
