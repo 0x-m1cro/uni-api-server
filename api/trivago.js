@@ -31,7 +31,7 @@ module.exports = async (req, res) => {
     await page.goto('https://www.trivago.com/en-US/lm/hotels-maldives?search=200-121;dr-20240819-20240824;rc-1-2', { waitUntil: 'networkidle2' });
     await page.waitForSelector('body');
 
-    page.on('response', async (response) => {
+    await page.on('response', async (response) => {
          
             if (response.url === 'https://www.trivago.com/graphql?accommodationSearchQuery') {
                 const url = response.url();
