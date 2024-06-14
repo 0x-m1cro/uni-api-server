@@ -1,7 +1,6 @@
 const puppeteer = require('puppeteer-core')
 const chromium = require('@sparticuz/chromium-min');
 const fs = require('fs').promises;
-import { promises as fs } from 'fs';
 import path from 'path';
 export const maxDuration = 30
 module.exports = async (req, res) => {
