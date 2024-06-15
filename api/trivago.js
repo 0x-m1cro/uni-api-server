@@ -14,9 +14,11 @@ module.exports = async (req, res) => {
     );
     
     browser = await puppeteer.launch({
-      args: [
-        ...chromium.args,
-      ],
+    //   args: [
+    //     ...chromium.args,
+    //     '--hide-scrollbars', 
+    //     '--disable-web-security',
+    //   ],
       executablePath: executablePath,
       headless: true,
       ignoreHTTPSErrors: true,
@@ -34,7 +36,7 @@ module.exports = async (req, res) => {
      await page.waitForTimeout(10000); // Wait for 5 seconds
     // Listen for response events
     page.on('response', async (response) => {
-        if (response.request().url() === 'https://www.trivago.com/graphql?accommodationSearchQuery') {
+        if (response.request().url() == 'https://www.trivago.com/graphql?accommodationSearchQuery') {
         const url = response.url();
         const status = response.status();
         const headers = response.headers();
@@ -46,7 +48,7 @@ module.exports = async (req, res) => {
             responseBody,
             headers
         });
-        fs.writeFileSync('./../public/trivago.json', JSON.stringify(data, null, 2));
+        fs.writeFileSync('trivago.json', JSON.stringify(data, null, 2));
 
         }
     });
