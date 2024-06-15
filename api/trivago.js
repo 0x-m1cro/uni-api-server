@@ -55,6 +55,8 @@ module.exports = async (req, res) => {
          
     // });
      //const json = path.resolve('trivago.json');
+     let body = await page.waitForSelector('body');
+    json = await body?.evaluate(el => el.textContent);
     res.status(200).send(json);
   } catch (error) {
     console.error('Error occurred:', error.message);
