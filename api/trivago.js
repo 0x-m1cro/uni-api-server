@@ -13,12 +13,10 @@ module.exports = async (req, res) => {
     );
     
     browser = await puppeteer.launch({
-      args: [
-            "--no-sandbox",
-            "--disable-setuid-sandbox",
-            "--no-zygote",
-            "--disable-web-security",
-            "--disable-gpu",
+     args: [
+            ...chromium.args,
+            '--hide-scrollbars', 
+            '--disable-web-security',
         ],
       executablePath: executablePath,
       headless: true,
@@ -28,12 +26,12 @@ module.exports = async (req, res) => {
 
     const page = await browser.newPage();
 
-    await page.setRequestInterception(true);
+    //await page.setRequestInterception(true);
 
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36')
      
     await page.goto('https://jsonplaceholder.typicode.com/posts', { waitUntil: 'networkidle2' });
-    await page.waitForSelector('body');
+  
 
     // await page.on('response', async (response) => {
          
