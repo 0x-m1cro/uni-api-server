@@ -81,12 +81,9 @@ module.exports = async (req, res) => {
  let jsn;
     
   try {
-     
-     setInterval( async () => {
-        await scrape();
-    }, 3000);
-
-
+    
+    await scrape() 
+    
     fs.readFile("../public/trivago.json", "utf8", (error, data) => {
         if (error) {
           console.log(error);
@@ -95,7 +92,8 @@ module.exports = async (req, res) => {
         console.log(JSON.parse(data));
         jsn = data
       });
-      res.status(200).send(jsn);
+
+    res.status(200).send(jsn);
   } catch (error) {
     console.error('Error occurred:', error.message);
     res.status(500).json({ error: error.message });
