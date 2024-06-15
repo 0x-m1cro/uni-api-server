@@ -1,112 +1,12 @@
-// const puppeteer = require('puppeteer-core')
-// const chromium = require('@sparticuz/chromium-min');
-// const fs = require('fs');
-// // import path from 'path';
-// export const maxDuration = 60
-
-// async function scrape() {
-//     let browser;
-//     let json;
-
-//     try {
-//         const executablePath = await chromium.executablePath(
-//           `https://github.com/Sparticuz/chromium/releases/download/v123.0.1/chromium-v123.0.1-pack.tar`
-//         );
-        
-//         browser = await puppeteer.launch({
-//          args: [
-//                 ...chromium.args,
-//                 '--hide-scrollbars', 
-//                 '--disable-web-security',
-//             ],
-//           executablePath: executablePath,
-//           headless: true,
-//           ignoreHTTPSErrors: true,
-//           dumpio: true
-//         });
-    
-//         const page = await browser.newPage();
-    
-//         //await page.setRequestInterception(true);
-    
-//         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36')
-         
-//         await page.goto('https://jsonplaceholder.typicode.com/posts', { waitUntil: 'networkidle2' });
-      
-    
-//         // await page.on('response', async (response) => {
-             
-//         //     if (response.url === 'https://www.trivago.com/graphql?accommodationSearchQuery') {
-//         //         const url = response.url();
-//         //         const status = response.status();
-//         //         const headers = response.headers();
-//         //         json = await response.json();
-                    
-//         //         if(responseBody){
-//         //         await fs.writeFile('public/trivago.json', responseBody);
-//         //         }
-    
-//         //         console.log(`URL: ${url}`);
-//         //         console.log(`Status: ${status}`);
-//         //         console.log('Headers:', headers);
-//         //         console.log('Response Body:', responseBody);
-//         //     }
-             
-//         // });
-//          //const json = path.resolve('trivago.json');
-//          let body = await page.waitForSelector('body');
-//          json = await body?.evaluate(el => el.textContent);
-    
-//         writeFile('../public/trivago.json', JSON.stringify(json, null, 2), (error) => {
-//             if (error) {
-//               console.log('An error has occurred ', error);
-//               return;
-//             }
-//             console.log('Data written successfully to disk');
-//           });
-       
-//       } catch (error) {
-//         console.error('Error occurred:', error.message);
-        
-//       } finally {
-//         if (browser) {
-//           await browser.close();
-//         }
-//       }
-// }
-
- 
-// module.exports = async (req, res) => {
-//  let jsn;
-    
-//   try {
-    
-//     await scrape() 
-
-//     fs.readFile("../public/trivago.json", "utf8", (error, data) => {
-//         if (error) {
-//           console.log(error);
-//           return;
-//         }
-//         console.log(JSON.parse(data));
-//         jsn = data
-//       });
-
-//     res.status(200).send(jsn);
-//   } catch (error) {
-//     console.error('Error occurred:', error.message);
-//     res.status(500).json({ error: error.message });
-//   }  
-// };
-
-
-
 const puppeteer = require('puppeteer-core')
 const chromium = require('@sparticuz/chromium-min');
 const fs = require('fs');
-export const maxDuration = 30
+export const maxDuration = 60
+
+
 module.exports = async (req, res) => {
   let browser;
+  let data = [];
 
   try {
     const executablePath = await chromium.executablePath(
@@ -126,19 +26,34 @@ module.exports = async (req, res) => {
     });
 
     const page = await browser.newPage();
+
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36')
      
-    await page.goto('https://jsonplaceholder.typicode.com/posts', { waitUntil: 'networkidle2' });
-    let body = await page.waitForSelector('body');
-    let json = await body?.evaluate(el => el.textContent);
-    fs.writeFile('../public/trivago.json', JSON.stringify(json, null, 2), (error) => {
-                        if (error) {
-                            console.log('An error has occurred ', error);
-                            return;
-                        }
-                        console.log('Data written successfully to disk');
-                        });
-    res.status(200).send(json);
+    await page.goto('https://www.trivago.com/en-US/lm/hotels-maldives?search=200-121;dr-20240819-20240824;rc-1-2', { waitUntil: 'networkidle2' });
+
+     await page.waitForSelector('body');
+
+     await page.waitForTimeout(5000); // Wait for 5 seconds
+    // Listen for response events
+    page.on('response', async (response) => {
+        if (response.request().url() === 'https://www.trivago.com/graphql?accommodationSearchQuery') {
+        const url = response.url();
+        const status = response.status();
+        const headers = response.headers();
+        const responseBody = await response.json(); // Get the response body as text
+
+        console.log('XHR Response URL:', url);
+
+        data.push({
+            responseBody,
+            headers
+        });
+        fs.writeFileSync('./../public/trivago.json', JSON.stringify(data, null, 2));
+
+        }
+    });
+
+    res.status(200).send(data);
   } catch (error) {
     console.error('Error occurred:', error.message);
     res.status(500).json({ error: error.message });
