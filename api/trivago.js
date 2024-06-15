@@ -13,7 +13,13 @@ module.exports = async (req, res) => {
     );
     
     browser = await puppeteer.launch({
-      args: ['--no-sandbox', '--disabled-setupid-sandbox','--disable-extensions'],
+      args: [
+            "--no-sandbox",
+            "--disable-setuid-sandbox",
+            "--no-zygote",
+            "--disable-web-security",
+            "--disable-gpu",
+        ],
       executablePath: executablePath,
       headless: true,
       ignoreHTTPSErrors: true,
