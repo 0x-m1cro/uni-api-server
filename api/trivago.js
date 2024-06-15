@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
         '--disable-web-security',
       ],
       executablePath: executablePath,
-      headless: true,
+      headless: false,
       ignoreHTTPSErrors: true,
       dumpio: true
     });
@@ -33,14 +33,14 @@ module.exports = async (req, res) => {
 
      await page.waitForSelector('body');
 
-     await page.waitForTimeout(5000); // Wait for 5 seconds
+     await page.waitForTimeout(10000); // Wait for 5 seconds
     // Listen for response events
     page.on('response', async (response) => {
         if (response.request().url() === 'https://www.trivago.com/graphql?accommodationSearchQuery') {
         const url = response.url();
         const status = response.status();
         const headers = response.headers();
-        const responseBody = await response.json(); // Get the response body as text
+        const responseBody = await response.text(); // Get the response body as text
 
         console.log('XHR Response URL:', url);
 
