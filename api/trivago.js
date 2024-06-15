@@ -84,7 +84,7 @@ module.exports = async (req, res) => {
      
      setInterval( async () => {
         await scrape();
-    }, 30000);
+    }, 3000);
 
 
     fs.readFile("../public/trivago.json", "utf8", (error, data) => {
