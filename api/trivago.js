@@ -103,6 +103,7 @@
 
 const puppeteer = require('puppeteer-core')
 const chromium = require('@sparticuz/chromium-min');
+const fs = require('fs');
 export const maxDuration = 30
 module.exports = async (req, res) => {
   let browser;
