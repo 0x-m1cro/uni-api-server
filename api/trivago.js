@@ -32,28 +32,28 @@ module.exports = async (req, res) => {
 
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36')
      
-    await page.goto('https://www.trivago.com/en-US/lm/hotels-maldives?search=200-121;dr-20240819-20240824;rc-1-2', { waitUntil: 'networkidle2' });
+    await page.goto('https://jsonplaceholder.typicode.com/posts', { waitUntil: 'networkidle2' });
     await page.waitForSelector('body');
 
-    await page.on('response', async (response) => {
+    // await page.on('response', async (response) => {
          
-        if (response.url === 'https://www.trivago.com/graphql?accommodationSearchQuery') {
-            const url = response.url();
-            const status = response.status();
-            const headers = response.headers();
-            json = await response.json();
+    //     if (response.url === 'https://www.trivago.com/graphql?accommodationSearchQuery') {
+    //         const url = response.url();
+    //         const status = response.status();
+    //         const headers = response.headers();
+    //         json = await response.json();
                 
-            if(responseBody){
-            await fs.writeFile('public/trivago.json', responseBody);
-            }
+    //         if(responseBody){
+    //         await fs.writeFile('public/trivago.json', responseBody);
+    //         }
 
-            console.log(`URL: ${url}`);
-            console.log(`Status: ${status}`);
-            console.log('Headers:', headers);
-            console.log('Response Body:', responseBody);
-        }
+    //         console.log(`URL: ${url}`);
+    //         console.log(`Status: ${status}`);
+    //         console.log('Headers:', headers);
+    //         console.log('Response Body:', responseBody);
+    //     }
          
-    });
+    // });
      //const json = path.resolve('trivago.json');
     res.status(200).send(json);
   } catch (error) {
