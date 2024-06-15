@@ -1,8 +1,8 @@
 const puppeteer = require('puppeteer-core')
 const chromium = require('@sparticuz/chromium-min');
-// const fs = require('fs').promises;
+const fs = require('fs').promises;
 // import path from 'path';
-export const maxDuration = 30
+export const maxDuration = 60
 module.exports = async (req, res) => {
   let browser;
   let json;
@@ -13,9 +13,6 @@ module.exports = async (req, res) => {
     );
     
     browser = await puppeteer.launch({
-      args: [
-        ...chromium.args
-          ],
       executablePath: executablePath,
       headless: true,
       ignoreHTTPSErrors: true,
@@ -33,21 +30,21 @@ module.exports = async (req, res) => {
 
     await page.on('response', async (response) => {
          
-            if (response.url === 'https://www.trivago.com/graphql?accommodationSearchQuery') {
-                const url = response.url();
-                const status = response.status();
-                const headers = response.headers();
-                json = await response.json();
-                 
-                // if(responseBody){
-                // await fs.writeFile('public/trivago.json', responseBody);
-                // }
-
-                console.log(`URL: ${url}`);
-                console.log(`Status: ${status}`);
-                console.log('Headers:', headers);
-                console.log('Response Body:', responseBody);
+        if (response.url === 'https://www.trivago.com/graphql?accommodationSearchQuery') {
+            const url = response.url();
+            const status = response.status();
+            const headers = response.headers();
+            json = await response.json();
+                
+            if(responseBody){
+            await fs.writeFile('public/trivago.json', responseBody);
             }
+
+            console.log(`URL: ${url}`);
+            console.log(`Status: ${status}`);
+            console.log('Headers:', headers);
+            console.log('Response Body:', responseBody);
+        }
          
     });
      //const json = path.resolve('trivago.json');
