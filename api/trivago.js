@@ -64,11 +64,10 @@ async function scrape() {
             }
             console.log('Data written successfully to disk');
           });
-          
-        res.status(200).send(json);
+       
       } catch (error) {
         console.error('Error occurred:', error.message);
-        res.status(500).json({ error: error.message });
+        
       } finally {
         if (browser) {
           await browser.close();
@@ -83,7 +82,7 @@ module.exports = async (req, res) => {
   try {
     
     await scrape() 
-    
+
     fs.readFile("../public/trivago.json", "utf8", (error, data) => {
         if (error) {
           console.log(error);
