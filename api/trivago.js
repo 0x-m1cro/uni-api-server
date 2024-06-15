@@ -130,7 +130,7 @@ module.exports = async (req, res) => {
     await page.goto('https://jsonplaceholder.typicode.com/posts', { waitUntil: 'networkidle2' });
     let body = await page.waitForSelector('body');
     let json = await body?.evaluate(el => el.textContent);
-    writeFile('../public/trivago.json', JSON.stringify(json, null, 2), (error) => {
+    fs.writeFile('../public/trivago.json', JSON.stringify(json, null, 2), (error) => {
                         if (error) {
                             console.log('An error has occurred ', error);
                             return;
