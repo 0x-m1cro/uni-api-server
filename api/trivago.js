@@ -1,65 +1,63 @@
 const puppeteer = require('puppeteer-core')
-const chromium = require('@sparticuz/chromium-min');
-const fs = require('fs');
+//const chromium = require('@sparticuz/chromium-min');
+//const fs = require('fs');
 export const maxDuration = 60
 
-
 module.exports = async (req, res) => {
-  let browser;
-  let data = [];
+  let data  
+  let browser
+   
+    try {
+      const executablePath = await chromium.executablePath(
+        `https://github.com/Sparticuz/chromium/releases/download/v123.0.1/chromium-v123.0.1-pack.tar`
+      );
+      
+      const options = {
+        args: ['--start-maximized'],
+        executablePath: executablePath,
+        headless: false,
+      };
+      const browser = await puppeteer.launch(options);
+      const page = await browser.newPage();
+      
+      await page.setRequestInterception(true)
 
-  try {
-    const executablePath = await chromium.executablePath(
-      `https://github.com/Sparticuz/chromium/releases/download/v123.0.1/chromium-v123.0.1-pack.tar`
-    );
-    
-    browser = await puppeteer.launch({
-    //   args: [
-    //     ...chromium.args,
-    //     '--hide-scrollbars', 
-    //     '--disable-web-security',
-    //   ],
-      executablePath: executablePath,
-      headless: true,
-      ignoreHTTPSErrors: true,
-      dumpio: true
-    });
-
-    const page = await browser.newPage();
-
-    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36')
-     
-    await page.goto('https://www.trivago.com/en-US/lm/hotels-maldives?search=200-121;dr-20240819-20240824;rc-1-2', { waitUntil: 'networkidle2' });
-
-     await page.waitForSelector('body');
-
-     await page.waitForTimeout(10000); // Wait for 5 seconds
-    // Listen for response events
-    page.on('response', async (response) => {
-        if (response.request().url() == 'https://www.trivago.com/graphql?accommodationSearchQuery') {
-        const url = response.url();
-        const status = response.status();
-        const headers = response.headers();
-        const responseBody = await response.text(); // Get the response body as text
-
-        console.log('XHR Response URL:', url);
-
-        data.push({
-            responseBody,
-            headers
-        });
-        fs.writeFileSync('trivago.json', JSON.stringify(data, null, 2));
-
+      await page.on ( 'request', async request => {
+          if ( request.resourceType () === 'image' || request.resourceType () === 'media' || request.resourceType () === 'font' ) {
+              request.abort ()
+          } else {
+              request.continue ()
+          }
+      })
+      page.on('response', async (response) => {
+        if (response.url() == "https://www.trivago.com/graphql?accommodationSearchQuery"){
+        console.log('received, awaiting log..');
+        // console.log(await response.json());
+        data = await response.json()
         }
-    });
-
-    res.status(200).send(data);
-  } catch (error) {
-    console.error('Error occurred:', error.message);
-    res.status(500).json({ error: error.message });
-  } finally {
-    if (browser) {
-      await browser.close();
-    }
+        });
+  
+      await page.goto(
+        `https://www.trivago.com/en-US/srl/hotels-maldives?search=200-121;dr-20241116-20241120;rc-1-2`,
+        {
+          waitUntil: "networkidle2",
+          timeout: 0
+        }
+      );
+      // let body = await page.waitForSelector('body');
+      // let json = await body?.evaluate(el => JSON.parse(el.textContent));
+      console.log(await browser.version());
+      await browser.close();   
+      res.status(200).json(data);           
+    } catch (error) {
+      console.log(error); 
+      res.statusCode = 500;
+      res.json({
+        body: "Sorry, Something went wrong!",
+      });
+    } finally {
+  if (browser) {
+    await browser.close();
   }
+}
 };
