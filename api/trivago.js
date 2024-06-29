@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer-core')
-//const chromium = require('@sparticuz/chromium-min');
+const chromium = require('@sparticuz/chromium-min');
 //const fs = require('fs');
 export const maxDuration = 60
 
