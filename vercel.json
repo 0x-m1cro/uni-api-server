@@ -7,17 +7,11 @@
      },
    {
     "src": "/api/maldives",
-    "dest": "api/maldives.js",
-    "headers": {
-        "Access-Control-Allow-Origin": "*"
-      }
+    "dest": "api/maldives.js"
    },
    {
     "src": "/api/hotel",
-    "dest": "api/hotel/index.js",
-    "headers": {
-        "Access-Control-Allow-Origin": "*"
-      }
+    "dest": "api/hotel/index.js"
    }
   ],
   "headers": [
