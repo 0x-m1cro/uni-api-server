@@ -8,6 +8,10 @@
    {
     "src": "/api/maldives",
     "dest": "api/maldives.js"
+   },
+   {
+    "src": "/api/hotel",
+    "dest": "api/hotel/index.js"
    }
   ]
  }
