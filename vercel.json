@@ -3,30 +3,25 @@
   "routes": [
     {
       "src": "/",
-      "dest": "index.html"
+      "dest": "index.html",
+      "headers": {
+        "Access-Control-Allow-Origin": "*"
+      }
      },
    {
     "src": "/api/maldives",
-    "dest": "api/maldives.js"
+    "dest": "api/maldives.js",
+    "headers": {
+        "Access-Control-Allow-Origin": "*"
+      }
    },
    {
     "src": "/api/hotel",
-    "dest": "api/hotel/index.js"
+    "dest": "api/hotel/index.js",
+    "headers": {
+        "Access-Control-Allow-Origin": "*"
+      }
    }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
-      ]
-    },
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
-      ]
-    }
   ]
  }
  
