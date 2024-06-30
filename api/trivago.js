@@ -5,19 +5,24 @@ export const maxDuration = 60
 
 module.exports = async (req, res) => {
   let data  
-  let browser
-   
-    try {
-      const executablePath = await chromium.executablePath(
-        `https://github.com/Sparticuz/chromium/releases/download/v123.0.1/chromium-v123.0.1-pack.tar`
-      );
-      
-      const options = {
-        args: ['--start-maximized'],
-        executablePath: executablePath,
-        headless: false,
-      };
-      const browser = await puppeteer.launch(options);
+  let browser;
+
+  try {
+    const executablePath = await chromium.executablePath(
+      `https://github.com/Sparticuz/chromium/releases/download/v123.0.1/chromium-v123.0.1-pack.tar`
+    );
+    
+    browser = await puppeteer.launch({
+      args: [
+        ...chromium.args,
+        '--hide-scrollbars', 
+        '--disable-web-security',
+      ],
+      executablePath: executablePath,
+      headless: true,
+      ignoreHTTPSErrors: true,
+      dumpio: true
+    });
       const page = await browser.newPage();
       
       await page.setRequestInterception(true)
