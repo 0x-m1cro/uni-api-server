@@ -49,8 +49,8 @@ module.exports = async (req, res) => {
           timeout: 0
         }
       );
-      // let body = await page.waitForSelector('body');
-      // let json = await body?.evaluate(el => JSON.parse(el.textContent));
+      // let body= await page.waitForSelector('body');
+      // let json= await body?.evaluate(el => JSON.parse(el.textContent));
       console.log(await browser.version());
       await browser.close();   
       res.status(200).json(data);           
