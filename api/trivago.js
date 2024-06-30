@@ -14,7 +14,6 @@ module.exports = async (req, res) => {
     
     browser = await puppeteer.launch({
       args: [
-        ...chromium.args,
         '--hide-scrollbars', 
         '--disable-web-security',
       ],
@@ -24,6 +23,7 @@ module.exports = async (req, res) => {
       dumpio: true
     });
       const page = await browser.newPage();
+
       await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36')
       
       await page.setRequestInterception(true)
@@ -47,7 +47,6 @@ module.exports = async (req, res) => {
         `https://www.trivago.com/en-US/srl/hotels-maldives?search=200-121;dr-20241116-20241120;rc-1-2`,
         {
           waitUntil: "networkidle2",
-          timeout: 0
         }
       );
       // let body= await page.waitForSelector('body');
