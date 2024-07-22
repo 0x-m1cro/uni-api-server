@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
 
       // const ua = await page.evaluate('navigator.userAgent');
 
-      // await page.setUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1')
+      await page.setUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1')
       
       // await page.setRequestInterception(true)
 
@@ -45,13 +45,13 @@ module.exports = async (req, res) => {
         }
       );
 
-      // await page.on('response', async (response) => {
-      //   if (response.url() == "https://www.trivago.com/graphql?accommodationSearchQuery"){
-      //     console.log('received, awaiting log..');
-      //     // console.log(await response.json());
-      //     data = await response.json()
-      //     }
-      //   });
+      await page.on('response', async (response) => {
+        if (response.url() == "https://www.trivago.com/graphql?accommodationSearchQuery"){
+          console.log('received, awaiting log..');
+          // console.log(await response.json());
+          data = await response.json()
+          }
+        });
  
       console.log('all ok?');
       await browser.close();   
