@@ -14,18 +14,8 @@ module.exports = async (req, res) => {
     );
     
     browser = await puppeteer.launch({
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--disable-dev-shm-usage",
-        "--disable-accelerated-2d-canvas",
-        "--no-first-run",
-        "--no-zygote",
-        // "--single-process",
-        "--disable-gpu",
-      ],
       executablePath: executablePath,
-      headless: true,
+      headless: false,
     });
       const page = await browser.newPage();
 
@@ -48,12 +38,12 @@ module.exports = async (req, res) => {
         }
       );
 
-      page.on('response', async (response) => {
+      await page.on('response', async (response) => {
         if (response.url() == "https://www.trivago.com/graphql?accommodationSearchQuery"){
-        console.log('received, awaiting log..');
-        // console.log(await response.json());
-        data = await response.json()
-        }
+          console.log('received, awaiting log..');
+          // console.log(await response.json());
+          data = await response.json()
+          }
         });
  
       console.log(await browser.version());
