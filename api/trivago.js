@@ -37,7 +37,7 @@ module.exports = async (req, res) => {
       // })
 
       await page.goto(
-        `https://www.trivago.com/`,
+        `https://www.trivago.com/en-US/lm/hotels-maldives?search=200-121;dr-20241001-20241005-s;rc-1-2`,
         {
           waitUntil: "networkidle2",
           timeout: 20000
