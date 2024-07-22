@@ -35,7 +35,7 @@ module.exports = async (req, res) => {
               request.continue ()
           }
       })
-      page.on('response', async (response) => {
+      await page.on('response', async (response) => {
         if (response.url() == "https://www.trivago.com/graphql?accommodationSearchQuery"){
         console.log('received, awaiting log..');
         // console.log(await response.json());
@@ -44,7 +44,7 @@ module.exports = async (req, res) => {
         });
   
       await page.goto(
-        `https://www.trivago.com/en-US/srl/hotels-maldives?search=200-121;dr-20241116-20241120;rc-1-2`,
+        `https://www.trivago.com/en-US/srl/hotels-maldives?search=200-121;dr-20241001-20241005-s;rc-1-2`,
         {
           waitUntil: "networkidle2",
         }
