@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
 
   try {
     const executablePath = await chromium.executablePath(
-      `https://github.com/Sparticuz/chromium/releases/download/v123.0.1/chromium-v126.0.0-pack.tar`
+      `https://github.com/Sparticuz/chromium/releases/download/v126.0.0/chromium-v126.0.0-pack.tar`
     );
     
     browser = await puppeteer.launch({
@@ -47,7 +47,7 @@ module.exports = async (req, res) => {
 
       await page.on('response', async (response) => {
         if (response.url() == "https://www.trivago.com/graphql?accommodationSearchQuery"){
-          console.log('received, awaiting log..');
+          console.log('received, awaiting log...');
           // console.log(await response.json());
           data = await response.json()
           }
