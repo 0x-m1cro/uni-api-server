@@ -38,7 +38,7 @@ module.exports = async (req, res) => {
           }
       })
       page.on('response', async (response) => {
-        if (response.url().contains() == "https://www.resortlife.travel/hotels/ashx/results.ashx"){
+        if (response.url().includes('results.ashx')){
         console.log('received, awaiting log..');
         // console.log(await response.json());
         data = await response.json()
@@ -48,7 +48,7 @@ module.exports = async (req, res) => {
       await page.goto(
         `https://www.resortlife.travel/en/hotels/maldives/2024-10-01/2024-10-05/41856?searchSessionID=1860676`,
         {
-          waitUntil: "domcontentloaded",
+          waitUntil: "networkidle2",
         }
       );
       // let body= await page.waitForSelector('body');
