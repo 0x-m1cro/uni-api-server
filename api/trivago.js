@@ -40,7 +40,7 @@ module.exports = async (req, res) => {
         `https://www.trivago.com/`,
         {
           waitUntil: "networkidle2",
-          timeout: 0
+          timeout: 20000
         }
       );
 
