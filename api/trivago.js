@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer-core')
 const chromium = require('@sparticuz/chromium-min');
+
 //const fs = require('fs');
 export const maxDuration = 60
 
@@ -14,7 +15,7 @@ module.exports = async (req, res) => {
     
     browser = await puppeteer.launch({
       executablePath: executablePath,
-      headless: 'shell',
+      headless: false,
       ignoreHTTPSErrors: true,
       dumpio: true
     });
@@ -31,6 +32,14 @@ module.exports = async (req, res) => {
               request.continue ()
           }
       })
+
+      await page.goto(
+        `https://www.trivago.com/en-US/srl/hotels-maldives?search=200-121;dr-20241001-20241005-s;rc-1-2`,
+        {
+          waitUntil: "networkidle2",
+        }
+      );
+
       await page.on('response', async (response) => {
         if (response.url() == "https://www.trivago.com/graphql?accommodationSearchQuery"){
         console.log('received, awaiting log..');
@@ -38,15 +47,7 @@ module.exports = async (req, res) => {
         data = await response.json()
         }
         });
-  
-      await page.goto(
-        `https://www.trivago.com/en-US/srl/hotels-maldives?search=200-121;dr-20241001-20241005-s;rc-1-2`,
-        {
-          waitUntil: "networkidle2",
-        }
-      );
-      // let body= await page.waitForSelector('body');
-      // let json= await body?.evaluate(el => JSON.parse(el.textContent));
+ 
       console.log(await browser.version());
       await browser.close();   
       res.status(200).json(data);           
