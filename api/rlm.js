@@ -38,7 +38,7 @@ module.exports = async (req, res) => {
           }
       })
       page.on('response', async (response) => {
-        if (response.url() == "https://www.resortlife.travel/hotels/ashx/results.ashx?"){
+        if (response.url().contains() == "https://www.resortlife.travel/hotels/ashx/results.ashx"){
         console.log('received, awaiting log..');
         // console.log(await response.json());
         data = await response.json()
