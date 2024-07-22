@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
         ...chromium.args,
       ],
       executablePath: executablePath,
-      headless: false,
+      headless: true,
     });
       const page = await browser.newPage();
 
