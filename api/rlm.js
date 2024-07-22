@@ -6,6 +6,7 @@ export const maxDuration = 60
 module.exports = async (req, res) => {
   let data  
   let browser;
+  let page
   let query = req.query;
 
   try {
@@ -24,7 +25,7 @@ module.exports = async (req, res) => {
       ignoreHTTPSErrors: true,
       dumpio: true
     });
-      const page = await browser.newPage();
+      page = await browser.newPage();
 
       await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36')
       
@@ -37,22 +38,22 @@ module.exports = async (req, res) => {
               request.continue ()
           }
       })
-      page.on('response', async (response) => {
+
+      await page.goto(
+        `https://www.resortlife.travel/en/hotels/maldives/2024-10-01/2024-10-05/41856?searchSessionID=1862840`,
+        {
+          waitUntil: "networkidle2",
+        }
+      );
+      
+      await page.on('response', async (response) => {
         if (response.url() == 'https://www.resortlife.travel/hotels/ashx/results.ashx?idioma=en&_=&searchSessionID=1862840&page=1&order=etiqueta'){
         console.log('received, awaiting log..');
         // console.log(await response.json());
         data = await response.json()
         }
         });
-  
-      await page.goto(
-        `https://www.resortlife.travel/en/hotels/maldives/2024-10-01/2024-10-05/41856?searchSessionID=1862840`,
-        {
-          waitUntil: "domcontentloaded",
-        }
-      );
-      // let body= await page.waitForSelector('body');
-      // let json= await body?.evaluate(el => JSON.parse(el.textContent));
+
       console.log(await browser.version());
       await browser.close();   
       res.status(200).json(data);           
