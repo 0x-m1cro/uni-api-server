@@ -14,9 +14,9 @@ module.exports = async (req, res) => {
     );
     
     browser = await puppeteer.launch({
-      args: ['--no-sandbox', '--disable-setuid-sandbox', '--enable-gpu'],
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
       executablePath: executablePath,
-      headless: 'shell',
+      headless: true,
     });
       const page = await browser.newPage();
 
