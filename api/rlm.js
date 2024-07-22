@@ -6,6 +6,7 @@ export const maxDuration = 60
 module.exports = async (req, res) => {
   let data  
   let browser;
+  let query = req.query;
 
   try {
     const executablePath = await chromium.executablePath(
@@ -14,6 +15,7 @@ module.exports = async (req, res) => {
     
     browser = await puppeteer.launch({
       args: [
+        ...chromium.args,
         '--hide-scrollbars', 
         '--disable-web-security',
       ],
