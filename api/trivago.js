@@ -24,9 +24,9 @@ module.exports = async (req, res) => {
     });
       const page = await browser.newPage();
 
-      const ua = await page.evaluate('navigator.userAgent');
+      // const ua = await page.evaluate('navigator.userAgent');
 
-      await page.setUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1')
+      // await page.setUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1')
       
       // await page.setRequestInterception(true)
 
@@ -39,23 +39,23 @@ module.exports = async (req, res) => {
       // })
 
       await page.goto(
-        `https://www.trivago.com/en-US/srl/hotels-maldives?search=200-121;dr-20241001-20241005-s;rc-1-2`,
+        `https://www.trivago.com/`,
         {
           waitUntil: "networkidle2",
         }
       );
 
-      await page.on('response', async (response) => {
-        if (response.url() == "https://www.trivago.com/graphql?accommodationSearchQuery"){
-          console.log('received, awaiting log..');
-          // console.log(await response.json());
-          data = await response.json()
-          }
-        });
+      // await page.on('response', async (response) => {
+      //   if (response.url() == "https://www.trivago.com/graphql?accommodationSearchQuery"){
+      //     console.log('received, awaiting log..');
+      //     // console.log(await response.json());
+      //     data = await response.json()
+      //     }
+      //   });
  
-      console.log(await browser.version());
+      console.log('all ok?');
       await browser.close();   
-      res.status(200).json(data);           
+      res.status(200).json('ok');           
     } catch (error) {
       console.log(error); 
       res.statusCode = 500;
