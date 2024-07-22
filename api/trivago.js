@@ -40,7 +40,7 @@ module.exports = async (req, res) => {
         }
       );
 
-      await page.on('response', async (response) => {
+      page.on('response', async (response) => {
         if (response.url() == "https://www.trivago.com/graphql?accommodationSearchQuery"){
         console.log('received, awaiting log..');
         // console.log(await response.json());
