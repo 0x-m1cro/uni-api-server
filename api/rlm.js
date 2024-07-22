@@ -38,7 +38,7 @@ module.exports = async (req, res) => {
           }
       })
       page.on('response', async (response) => {
-        if (response.url().includes('results.ashx')){
+        if (response.url().endsWith('/results.ashx?')){
         console.log('received, awaiting log..');
         // console.log(await response.json());
         data = await response.json()
