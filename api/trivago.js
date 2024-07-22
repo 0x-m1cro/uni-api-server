@@ -14,8 +14,16 @@ module.exports = async (req, res) => {
     );
     
     browser = await puppeteer.launch({
-      args: [...chromium.args, '--no-sandbox', '--disable-setuid-sandbox'],
-      ignoreDefaultArgs: ['--disable-extensions'],
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-accelerated-2d-canvas",
+        "--no-first-run",
+        "--no-zygote",
+        // "--single-process",
+        "--disable-gpu",
+      ],
       executablePath: executablePath,
       headless: true,
     });
