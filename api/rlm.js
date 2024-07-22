@@ -38,7 +38,7 @@ module.exports = async (req, res) => {
           }
       })
       page.on('response', async (response) => {
-        if (response.url().endsWith('/results.ashx?')){
+        if (response.url() == 'https://www.resortlife.travel/hotels/ashx/results.ashx?idioma=en&_=&searchSessionID=1862840&page=1&order=etiqueta'){
         console.log('received, awaiting log..');
         // console.log(await response.json());
         data = await response.json()
@@ -46,7 +46,7 @@ module.exports = async (req, res) => {
         });
   
       await page.goto(
-        `https://www.resortlife.travel/en/hotels/maldives/2024-10-01/2024-10-05/41856?searchSessionID=1860676`,
+        `https://www.resortlife.travel/en/hotels/maldives/2024-10-01/2024-10-05/41856?searchSessionID=1862840`,
         {
           waitUntil: "domcontentloaded",
         }
