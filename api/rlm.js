@@ -48,7 +48,7 @@ module.exports = async (req, res) => {
       await page.goto(
         `https://www.resortlife.travel/en/hotels/maldives/2024-10-01/2024-10-05/41856?searchSessionID=1860676`,
         {
-          waitUntil: "networkidle2",
+          waitUntil: "domcontentloaded",
         }
       );
       // let body= await page.waitForSelector('body');
