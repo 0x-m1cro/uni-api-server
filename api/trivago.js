@@ -18,25 +18,26 @@ module.exports = async (req, res) => {
         ...chromium.args,
         '--hide-scrollbars', 
         '--no-sandbox',
+        '--disable-dev-shm-usage'
       ],
       executablePath: executablePath,
       headless: true,
     });
       const page = await browser.newPage();
 
-      // const ua = await page.evaluate('navigator.userAgent');
+      const ua = await page.evaluate('navigator.userAgent');
 
-      await page.setUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1')
+      await page.setUserAgent(ua)
       
-      // await page.setRequestInterception(true)
+      await page.setRequestInterception(true)
 
-      // await page.on ( 'request', async request => {
-      //     if ( request.resourceType () === 'image' || request.resourceType () === 'media' || request.resourceType () === 'font' ) {
-      //         request.abort ()
-      //     } else {
-      //         request.continue ()
-      //     }
-      // })
+      await page.on ( 'request', async request => {
+          if ( request.resourceType () === 'image' || request.resourceType () === 'media' || request.resourceType () === 'font' ) {
+              request.abort ()
+          } else {
+              request.continue ()
+          }
+      })
 
       await page.goto(
         `https://www.trivago.com/en-US/lm/hotels-maldives?search=200-121;dr-20241001-20241005-s;rc-1-2`,
@@ -45,14 +46,10 @@ module.exports = async (req, res) => {
         }
       );
 
-      await page.waitForNavigation({
-        waitUntil: 'networkidle0',
-      });
-
       await page.on('response', async (response) => {
         if (response.url() == "https://www.trivago.com/graphql?accommodationSearchQuery"){
           console.log('received, awaiting log...');
-          // console.log(await response.json());
+          console.log(ua)
           data = await response.json()
           }
         });
